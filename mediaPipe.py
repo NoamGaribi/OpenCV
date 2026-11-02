@@ -5,8 +5,17 @@ import serial
 import time
 
 
+import serial.tools.list_ports
+
+# Find the Arduino's port automatically (on Mac it looks like /dev/cu.usbmodem1201)
+def find_arduino_port():
+    for p in serial.tools.list_ports.comports():
+        if "usbmodem" in p.device or "usbserial" in p.device or "Arduino" in (p.description or ""):
+            return p.device
+    raise RuntimeError("Arduino not found. Is it plugged in? Close the Arduino IDE Serial Monitor too.")
+
 # Connect to Arduino before the loop
-serialCom = serial.Serial("COM3", 9600, timeout=1)
+serialCom = serial.Serial(find_arduino_port(), 9600, timeout=1)
 time.sleep(2)  # Allow Arduino to reset
 
 cap = cv2.VideoCapture(0)
