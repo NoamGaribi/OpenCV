@@ -9,11 +9,11 @@ int pos = 90;    // variable to store the servo position
 void setup() {
   myservo.attach(9);  // attaches the servo on pin 9 to the Servo object
 
-  myservo.qrite(pos);
+  myservo.write(pos);
   
   // Start serial communication with Python
   // The baud rate must match Python's baud rate
-  Serial.begin(9600)
+  Serial.begin(9600);
 
 }
 
@@ -34,5 +34,6 @@ void loop() {
     Serial.println(pos);
 
   }
+  
 
 }
